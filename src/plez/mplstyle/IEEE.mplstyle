@@ -1,13 +1,24 @@
+# Font
 font.family : serif
 font.serif : Times
+
+# ticks
 xtick.direction : in
 xtick.labelsize : 9
 ytick.direction : in
 ytick.labelsize : 9
+
+# axes
 axes.labelsize : 9
 axes.titlesize : 9
+
+# figure
 figure.labelsize : 9
 figure.titlesize : 9
+
+# font
 font.size : 9
+
+# legend
 legend.fontsize : 9
 legend.title_fontsize : 9
