@@ -8,9 +8,9 @@ The basic usage is to import the appropriate plotter and wrap a `with` block wit
 ```
 import numpy as np
 
-from plez import Plotter
+from plez import IEEE_Plotter
 
-with Plotter("test.pdf") as P:
+with IEEE_Plotter("plot.pdf", height=0.9, height_unit="ratio", col_span=1) as P:
 
     P.fig.suptitle(r"\textbf{HERE IS A TITLE}")
 
@@ -20,4 +20,4 @@ with Plotter("test.pdf") as P:
 
     P.fig.tight_layout()
 ```
-This will automatically generate `test.pdf`.
+This will automatically generate `plot.pdf`, which matches the IEEE style and single-column width, and is 0.9 times as tall as it is wide.
