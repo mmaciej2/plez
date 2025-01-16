@@ -1,1 +1,1 @@
-from .core import Plotter
+from .plotters import *

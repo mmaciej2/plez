@@ -7,24 +7,42 @@ from matplotlib.backends.backend_pgf import PdfPages
 
 plt.rcParams.update({
     "text.usetex": True,
-    "pgf.texsystem": "pdflatex",
     "pgf.rcfonts": False,
-    "pgf.preamble": "\n".join([
-         r"\usepackage{times}",
-         r"\usepackage{amsmath}",
-         r"\usepackage{amssymb}",
-    ]),
+    "pgf.texsystem": "pdflatex",
 })
 
 class Plotter:
-    def __init__(self, filename):
-        plt.style.use(files("plez.mplstyle") / "IEEE.mplstyle")
+    def __init__(self,
+            filename,
+            height=1.0,
+            height_unit="ratio",
+            col_span=1,
+            style=None,
+            preamble=None,
+        ):
+
         self.filename = filename
 
-    def __enter__(self):
-        self.pdf = PdfPages(self.filename)
+        # Compute dimensions of figure
+        assert height_unit in ["ratio", "in", "cm"], 'Only "ratio", "in", and "cm" are valid units'
+        assert col_span in list(range(1, len(self.widths)+1)), "Invalid number of columns for template"
+        width = self.widths[col_span-1]
+        if height_unit == "ratio":
+            self.figsize = (width, width*height)
+        elif height_unit == "in":
+            self.figsize = (width, height)
+        elif height_unit == "cm":
+            self.figsize = (width, height*CM)
+
+        # Configure the style
+        plt.style.use(files("plez.mplstyle") / style)
+        plt.rcParams.update({"pgf.preamble": "\n".join(preamble)})
+
         self.plt = plt
-        self.fig = self.plt.figure(figsize=(3.39, 3))
+
+    def __enter__(self):
+        self.fig = self.plt.figure(figsize=self.figsize)
+        self.pdf = PdfPages(self.filename)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
