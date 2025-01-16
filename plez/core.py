@@ -8,7 +8,6 @@ from matplotlib.backends.backend_pgf import PdfPages
 plt.rcParams.update({
     "text.usetex": True,
     "pgf.rcfonts": False,
-    "pgf.texsystem": "pdflatex",
 })
 
 class Plotter:
@@ -19,6 +18,7 @@ class Plotter:
             col_span=1,
             style=None,
             preamble=None,
+            texsystem="pdflatex",
         ):
 
         self.filename = filename
@@ -36,7 +36,10 @@ class Plotter:
 
         # Configure the style
         plt.style.use(files("plez.mplstyle") / style)
-        plt.rcParams.update({"pgf.preamble": "\n".join(preamble)})
+        plt.rcParams.update({
+            "pgf.texsystem": texsystem,
+            "pgf.preamble": "\n".join(preamble)
+        })
 
         self.plt = plt
 
