@@ -16,8 +16,10 @@ class Plotter:
             height=1.0,
             height_unit="ratio",
             col_span=1,
+            scale=1.0,
             style=None,
             preamble=None,
+            extra_preamble=[],
             texsystem="pdflatex",
         ):
 
@@ -26,7 +28,7 @@ class Plotter:
         # Compute dimensions of figure
         assert height_unit in ["ratio", "in", "cm"], 'Only "ratio", "in", and "cm" are valid units'
         assert col_span in list(range(1, len(self.widths)+1)), "Invalid number of columns for template"
-        width = self.widths[col_span-1]
+        width = self.widths[col_span-1] * scale
         if height_unit == "ratio":
             self.figsize = (width, width*height)
         elif height_unit == "in":
@@ -38,7 +40,7 @@ class Plotter:
         plt.style.use(files("plez.mplstyle") / style)
         plt.rcParams.update({
             "pgf.texsystem": texsystem,
-            "pgf.preamble": "\n".join(preamble)
+            "pgf.preamble": "\n".join(preamble + extra_preamble)
         })
 
         self.plt = plt
