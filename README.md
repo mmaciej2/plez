@@ -8,9 +8,9 @@ The basic usage is to import the appropriate plotter and wrap a `with` block wit
 ```
 import numpy as np
 
-from plez import IEEE_Plotter
+from plez import IEEE_Conference_Plotter
 
-with IEEE_Plotter("plot.pdf", height=0.9, height_unit="ratio", col_span=1) as P:
+with IEEE_Conference_Plotter("plot.pdf", height=0.9, height_unit="ratio", col_span=1) as P:
 
     P.fig.suptitle(r"\textbf{HERE IS A TITLE}")
 
