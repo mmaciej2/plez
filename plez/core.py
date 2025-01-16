@@ -44,6 +44,8 @@ class Plotter:
         self.plt = plt
 
     def __enter__(self):
+        import os
+        os.environ["TEXINPUTS"] = ".:" + str(files("plez.mplstyle")) + ":"
         self.fig = self.plt.figure(figsize=self.figsize)
         self.pdf = PdfPages(self.filename)
         return self

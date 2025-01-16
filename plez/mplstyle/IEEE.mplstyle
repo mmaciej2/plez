@@ -1,6 +1,6 @@
 # Font
 font.family : serif
-font.serif : Times
+#font.serif : Times
 
 # ticks
 xtick.direction : in
