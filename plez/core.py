@@ -5,11 +5,6 @@ matplotlib.use('pgf')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pgf import PdfPages
 
-plt.rcParams.update({
-    "text.usetex": True,
-    "pgf.rcfonts": False,
-})
-
 class Plotter:
     def __init__(self,
             filename,
@@ -20,6 +15,7 @@ class Plotter:
             style=None,
             preamble=None,
             extra_preamble=[],
+            rcfonts=False,
             texsystem="pdflatex",
         ):
 
@@ -39,8 +35,9 @@ class Plotter:
         # Configure the style
         plt.style.use(files("plez.mplstyle") / style)
         plt.rcParams.update({
+            "pgf.rcfonts": rcfonts,
+            "pgf.preamble": "\n".join(preamble + extra_preamble),
             "pgf.texsystem": texsystem,
-            "pgf.preamble": "\n".join(preamble + extra_preamble)
         })
 
         self.plt = plt

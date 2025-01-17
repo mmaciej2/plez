@@ -21,3 +21,16 @@ with IEEE_Conference_Plotter("plot.pdf", height=0.9, height_unit="ratio", col_sp
     P.fig.tight_layout()
 ```
 This will automatically generate `plot.pdf`, which matches the IEEE style and single-column width, and is 0.9 times as tall as it is wide.
+
+## Helpful Tips and Tricks
+### Getting sizes in LaTeX
+
+`\the\columnwidth` and `\the\linewidth` print the respective parameters in pts.
+
+If you want to determine a font size, the following macro is useful:
+```
+\makeatletter
+\newcommand\thefontsize[1]{{\f@size pt}}
+\makeatother
+```
+You can then use `\thefontsize{}` to print the current font size.

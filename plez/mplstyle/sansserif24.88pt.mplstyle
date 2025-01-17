@@ -1,0 +1,18 @@
+# Basic rcParams for serif fonts that are all 24.88 pt
+
+## FONT
+font.family : sans-serif
+font.size : 24.88
+## AXES
+axes.titlesize : 24.88
+axes.labelsize : 24.88
+## TICKS
+xtick.labelsize : 24.88
+ytick.labelsize : 24.88
+xtick.direction : in
+ytick.direction : in
+## LEGEND
+legend.fontsize : 24.88
+## FIGURE
+figure.titlesize : 24.88
+figure.labelsize : 24.88
