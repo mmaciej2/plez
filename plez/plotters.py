@@ -42,7 +42,7 @@ class ICASSP2024_Plotter(Plotter):
         ]
         super().__init__(filename, **kwargs)
 
-class ICASSP2025_Plotter(IEE_Conference_Plotter):
+class ICASSP2025_Plotter(IEEE_Conference_Plotter):
     pass
 
 ##### Interspeech #####
