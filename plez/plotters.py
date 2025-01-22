@@ -18,7 +18,7 @@ MM = 1 / 25.4
 ##### General IEEE.cls document types #####
 
 class IEEE_Conference_Plotter(Plotter):
-    def __init__(self, filename, pt=10, small=True, **kwargs):
+    def __init__(self, *args, pt=10, small=True, **kwargs):
         self.widths=[252.0*PT, 516.0*PT]
         # The IEEE template uses a smaller font for captions and tables. The
         # default behavior is to use this smaller font, as it is assumed that
@@ -35,12 +35,12 @@ class IEEE_Conference_Plotter(Plotter):
             r"\renewcommand{\ttdefault}{pcr}",
             r"\usepackage{amsmath,amssymb,amsfonts}",
         ]
-        super().__init__(filename, **kwargs)
+        super().__init__(*args, **kwargs)
 
 ##### ICASSP #####
 
 class ICASSP2024_Plotter(Plotter):
-    def __init__(self, filename, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.widths=[3.39*IN, 7.0*IN]
         kwargs["style"] = "serif9pt.mplstyle"
         kwargs["preamble"] = [
@@ -49,7 +49,7 @@ class ICASSP2024_Plotter(Plotter):
             r"\renewcommand{\ttdefault}{pcr}",
             r"\usepackage{amsmath,amssymb}",
         ]
-        super().__init__(filename, **kwargs)
+        super().__init__(*args, **kwargs)
 
 class ICASSP2025_Plotter(IEEE_Conference_Plotter):
     pass
@@ -57,7 +57,7 @@ class ICASSP2025_Plotter(IEEE_Conference_Plotter):
 ##### Interspeech #####
 
 class Interspeech2024_Plotter(Plotter):
-    def __init__(self, filename, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.widths=[80*MM, 170*MM]
         kwargs["style"] = "serif9pt.mplstyle"
         kwargs["preamble"] = [
@@ -66,7 +66,7 @@ class Interspeech2024_Plotter(Plotter):
             r"\renewcommand{\rmdefault}{ptm}",
             r"\renewcommand{\ttdefault}{pcr}",
         ]
-        super().__init__(filename, **kwargs)
+        super().__init__(*args, **kwargs)
 
 class Interspeech2025_Plotter(Interspeech2024_Plotter):
     pass
@@ -79,7 +79,7 @@ class WASPAA2025_Plotter(IEEE_Conference_Plotter):
 ##### Beamer Gemini #####
 
 class Beamer_Gemini_Plotter(Plotter):
-    def __init__(self, filename, colwidth=0.3*120, sepwidth=0.025*120, small=False, **kwargs):
+    def __init__(self, *args, colwidth=0.3*120, sepwidth=0.025*120, small=False, **kwargs):
         self.widths=[colwidth*(n_col+1)*CM + sepwidth*n_col*CM for n_col in range(3)]
         kwargs["texsystem"] = "lualatex"
         # The beamer gemini template uses a smaller font for captions than the
@@ -95,4 +95,4 @@ class Beamer_Gemini_Plotter(Plotter):
             r"\newfontfamily\Lato[Ligatures=TeX]{Lato}",
             r"\setsansfont{Lato}[UprightFont=*-Light,ItalicFont=*-LightItalic,BoldFont=*-Regular,BoldItalicFont=*-Italic]",
         ]
-        super().__init__(filename, **kwargs)
+        super().__init__(*args, **kwargs)
