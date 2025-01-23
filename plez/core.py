@@ -1,4 +1,3 @@
-from importlib.resources import files
 from contextlib import contextmanager
 
 import matplotlib
@@ -14,7 +13,7 @@ class Plotter:
             height_unit="ratio",
             col_span=1,
             scale=1.0,
-            style=None,
+            style="plez.mplstyle.core",
             preamble=None,
             extra_preamble=[],
             rcfonts=False,
@@ -29,11 +28,14 @@ class Plotter:
 
         self._figsize = self.parse_plot_configs(height, height_unit, col_span, scale)
 
-        self._style = style
+        self.update_style_params({})
+
         self._rcfonts = rcfonts
         self._preamble = preamble
         self._extra_preamble = extra_preamble
         self._texsystem = texsystem
+
+        plt.style.use(style)
 
         self.plt = plt
 
@@ -48,8 +50,14 @@ class Plotter:
         elif height_unit == "cm":
             return (width, height/2.54)
 
+    def update_style_params(self, rcParams_dict):
+        try:
+            self._style_params = {**self._style_params, **rcParams_dict}
+        except AttributeError:
+            self._style_params = {**rcParams_dict}
+
     def configure_backend(self):
-        self.plt.style.use(files("plez.mplstyle") / self._style)
+        self.plt.rcParams.update(self._style_params)
         self.plt.rcParams.update({
             "pgf.rcfonts": self._rcfonts,
             "pgf.preamble": "\n".join(self._preamble + self._extra_preamble),
