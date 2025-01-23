@@ -1,4 +1,5 @@
 from setuptools import find_packages, setup
+from shutil import which
 
 __version__ = "0.1.0"
 
@@ -7,6 +8,11 @@ long_description = open("README.md").read()
 install_requires = [
     "matplotlib",
 ]
+
+assert which("pdflatex") or which("lualatex") or which("xelatex"), (
+    "No latex installation supported by matplotlib found. You should probably "
+    "install pdflatex, maybe also lualatex and/or xelatex."
+)
 
 setup(
     name="plez",
