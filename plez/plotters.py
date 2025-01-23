@@ -1,4 +1,5 @@
 from .core import Plotter
+from . import styles
 
 __all__ = [
     "IEEE_Conference_Plotter",
@@ -20,15 +21,16 @@ MM = 1 / 25.4
 class IEEE_Conference_Plotter(Plotter):
     def __init__(self, *args, pt=10, small=True, **kwargs):
         self.widths=[252.0*PT, 516.0*PT]
+        self.update_style_params({"font.family": "serif"})
         # The IEEE template uses a smaller font for captions and tables. The
         # default behavior is to use this smaller font, as it is assumed that
         # people are trying to conserve space in a conference paper, and this
         # serves as the "minimum acceptable fontsize". But, you can enable
         # small=False to use the font size of the document body.
         if small:
-            kwargs["style"] = f"serif{8 if pt<11 else 9}pt.mplstyle"
+            self.update_style_params(styles.fontsize(8 if pt<11 else 9))
         else:
-            kwargs["style"] = f"serif{pt}pt.mplstyle"
+            self.update_style_params(styles.fontsize(pt))
         kwargs["preamble"] = [
             r"\renewcommand{\sfdefault}{phv}",
             r"\renewcommand{\rmdefault}{ptm}",
@@ -42,7 +44,8 @@ class IEEE_Conference_Plotter(Plotter):
 class ICASSP2024_Plotter(Plotter):
     def __init__(self, *args, **kwargs):
         self.widths=[3.39*IN, 7.0*IN]
-        kwargs["style"] = "serif9pt.mplstyle"
+        self.update_style_params({"font.family": "serif"})
+        self.update_style_params(styles.fontsize(9))
         kwargs["preamble"] = [
             r"\renewcommand{\sfdefault}{phv}",
             r"\renewcommand{\rmdefault}{ptm}",
@@ -59,7 +62,8 @@ class ICASSP2025_Plotter(IEEE_Conference_Plotter):
 class Interspeech2024_Plotter(Plotter):
     def __init__(self, *args, **kwargs):
         self.widths=[80*MM, 170*MM]
-        kwargs["style"] = "serif9pt.mplstyle"
+        self.update_style_params({"font.family": "serif"})
+        self.update_style_params(styles.fontsize(9))
         kwargs["preamble"] = [
             r"\usepackage{amssymb,amsmath,bm}",
             r"\renewcommand{\sfdefault}{phv}",
@@ -82,10 +86,11 @@ class Beamer_Gemini_Plotter(Plotter):
     def __init__(self, *args, colwidth=0.3*120, sepwidth=0.025*120, small=False, **kwargs):
         self.widths=[colwidth*(n_col+1)*CM + sepwidth*n_col*CM for n_col in range(3)]
         kwargs["texsystem"] = "lualatex"
+        self.update_style_params({"font.family": "sans-serif"})
         # The beamer gemini template uses a smaller font for captions than the
         # body. You can enable small=True to use this smaller font, but the
         # default is the larger font for easily-legible posters.
-        kwargs["style"] = f"sansserif{20.74 if small else 24.88}pt.mplstyle"
+        self.update_style_params(styles.fontsize(20.74 if small else 24.88))
         kwargs["preamble"] = [
             r"\usepackage[T1]{fontenc}",
             r"\usepackage{lmodern}",
