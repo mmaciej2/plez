@@ -60,10 +60,10 @@ class ICASSP2025_Plotter(IEEE_Conference_Plotter):
 ##### Interspeech #####
 
 class Interspeech2024_Plotter(Plotter):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, small=False, **kwargs):
         self.widths=[80*MM, 170*MM]
         self.update_style_params({"font.family": "serif"})
-        self.update_style_params(styles.fontsize(9))
+        self.update_style_params(styles.fontsize(8 if small else 9))
         kwargs["preamble"] = [
             r"\usepackage{amssymb,amsmath,bm}",
             r"\renewcommand{\sfdefault}{phv}",
