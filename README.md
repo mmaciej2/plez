@@ -1,19 +1,17 @@
 # Plotting for LaTeX is EZ
 
-This is a utility to make it easy to generate plots that look nice in papers which follow a LaTeX template.
+This is a utility to make it easy to generate plots that look nice in academic papers which follow a LaTeX template.
 
-It provides a basic environment for `matplotlib` such that any plots generated will have the correct fonts and sizes to match the style of the paper's template, including LaTeX math fonts, which not only looks more professional, but also helps prevent reviewer complaints of illegible figures.
+It serves as an interface for `matplotlib` that aims to achieve plug-and-play plotting, abstracting away much of the boilerplate-type code used to control stylistic aspects of the plots (such as sizing and fonts), allowing for easy creation of professional, aesthetically-pleasing plots.
 
-The workflow design for this package is to define how much space your figure will take (relative to a column width) and then generate a figure within those bounds, as opposed to designing a figure and trying to fit it into the paper.
-This again not only prevents illegible figures due to shrinking fonts too small, but also makes fitting the paper to a page limit easier, as it is possible to define how much height your figure will take, and then can work on the figure to fit inside that size.
-
-To install, do `pip install .`, or `pip install -e .` for an editable version, which is useful for adding new templates. You will need a `pdflatex` install and possibly `lualatex` and/or `xelatex` as well.
+The workflow design for this package is to define how much vertical space your figure will take within a column and generate a figure within those bounds, rather than the common workflow of designing a figure and later trying to fit it into the paper.
+This not only prevents illegible figures due to shrinking fonts too small while resizing, but also makes fitting the paper to a page limit easier, as it is possible to define how much height your figure will take ahead of time, allowing you to then work on generating a figure that fits inside that size.
 
 ## Basic Usage
 
 The package defines a set of supported conference templates (listed in `plez/plotters.py`).
 These can then be used as a context manager to generate a figure via access to `plt` and `fig` methods, which correspond to the typical `import matplotlib.pyplot as plt` and `fig = plt.figure()` constructions.
-Upon closure of the context manager, the package will write the file in `.pdf` format with the appropriate size to be inserted into a LaTeX document without resizing, i.e. `\includegraphics[width=\columnwidth]{plot.pdf}`.
+Upon closure of the context manager, the package will save the plot in `.pdf` format in the appropriate size to be inserted into a LaTeX document without resizing, i.e. `\includegraphics[width=\columnwidth]{plot.pdf}`.
 
 
 Here is some example usage:
@@ -22,7 +20,7 @@ import numpy as np
 
 from plez import IEEE_Conference_Plotter
 
-with IEEE_Conference_Plotter("plot.pdf", height=0.9, height_unit="ratio", col_span=1) as P:
+with IEEE_Conference_Plotter("plot.pdf", height=0.9) as P:
 
     P.fig.suptitle(r"\textbf{HERE IS A TITLE}")
 
@@ -51,7 +49,13 @@ with plotter("plot.pdf", height=0.9) as P:
     P.fig.tight_layout()
 ```
 
-These will automatically generate `plot.pdf`, which matches the IEEE conference style and single-column width, and is 0.9 times as tall as it is wide.
+These examples generate `plot.pdf`, which matches the IEEE conference style and single-column width, and is 0.9 times as tall as it is wide.
+
+## Installation
+
+To install, do `pip install .`, or `pip install -e .` for an editable version, which can be useful for adding new templates. 
+
+The package also requires a `pdflatex` install and possibly `lualatex` and/or `xelatex` as well.
 
 ## API Information
 
