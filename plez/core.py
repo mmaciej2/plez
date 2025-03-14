@@ -3,7 +3,6 @@ from contextlib import contextmanager
 import matplotlib
 matplotlib.use('pgf')
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pgf import PdfPages
 
 class Plotter:
     def __init__(self,
@@ -28,7 +27,10 @@ class Plotter:
 
         self._figsize = self.parse_plot_configs(height, height_unit, col_span, scale)
 
-        self.update_style_params({})
+        self.update_style_params({
+            "savefig.format": "pdf",
+            "figure.dpi": 600,
+        })
 
         self._rcfonts = rcfonts
         self._preamble = preamble
@@ -67,24 +69,21 @@ class Plotter:
     def __enter__(self):
         self.configure_backend()
         self.fig = self.plt.figure(figsize=self._figsize)
-        self.pdf = PdfPages(self.filename)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.pdf.savefig()
-        self.pdf.close()
+        self.fig.savefig(self.filename)
 
     @contextmanager
     def __call__(self, filename, height=1.0, height_unit="ratio", col_span=1, scale=1.0):
         figsize = self.parse_plot_configs(height, height_unit, col_span, scale)
         self.configure_backend()
-        class PDF_Figure:
+        class PGF_Figure:
             plt = self.plt
             fig = self.plt.figure(figsize=figsize)
-            pdf = PdfPages(filename)
-        pdf_figure = PDF_Figure()
+            file_out = filename
+        pgf_figure = PGF_Figure()
         try:
-            yield pdf_figure
+            yield pgf_figure
         finally:
-            pdf_figure.pdf.savefig()
-            pdf_figure.pdf.close()
+            pgf_figure.fig.savefig(pgf_figure.file_out)
