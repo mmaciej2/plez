@@ -9,6 +9,7 @@ __all__ = [
     "Interspeech2025_Plotter",
     "WASPAA2025_Plotter",
     "Beamer_Gemini_Plotter",
+    "Helvetica_Plotter",
 ]
 
 PT = 1 / 72.27  # can be found with \the\columnwidth or \the\textwidth
@@ -101,3 +102,22 @@ class Beamer_Gemini_Plotter(Plotter):
             r"\setsansfont{Lato}[UprightFont=*-Light,ItalicFont=*-LightItalic,BoldFont=*-Regular,BoldItalicFont=*-Italic]",
         ]
         super().__init__(*args, **kwargs)
+
+##### Helvetica Presentation #####
+
+class Helvetica_Plotter(Plotter):
+    def __init__(self, *args, **kwargs):
+        self.widths=[4.267]
+        self.update_style_params({"font.family": "sans-serif"})
+        self.update_style_params({
+            "figure.facecolor":  (1.0, 1.0, 1.0, 0.0),
+        })
+        self.update_style_params(styles.fontsize(8))
+        self.update_style_params(styles.black_color((0.0, 0.0, 1.0)))
+        kwargs["preamble"] = [
+            r"\usepackage{amsmath,amssymb}",
+            r"\usepackage{arev}",
+            r"\usepackage{helvet}",
+        ]
+        super().__init__(*args, **kwargs)
+        self.update_style_params({"figure.dpi": 300})
