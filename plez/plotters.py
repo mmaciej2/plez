@@ -78,8 +78,21 @@ class Interspeech2025_Plotter(Interspeech2024_Plotter):
 
 ##### WASPAA #####
 
-class WASPAA2025_Plotter(IEEE_Conference_Plotter):
-    pass
+class WASPAA2025_Plotter(Plotter):
+    def __init__(self, *args, pt=9, small=True, **kwargs):
+        self.widths=[3.487*IN, 7.14*IN]
+        self.update_style_params({"font.family": "serif"})
+        if small:
+            self.update_style_params(styles.fontsize(8 if pt<11 else 9))
+        else:
+            self.update_style_params(styles.fontsize(pt))
+        kwargs["preamble"] = [
+            r"\renewcommand{\sfdefault}{phv}",
+            r"\renewcommand{\rmdefault}{ptm}",
+            r"\renewcommand{\ttdefault}{pcr}",
+            r"\usepackage{amsmath,amssymb,amsfonts}",
+        ]
+        super().__init__(*args, **kwargs)
 
 ##### Beamer Gemini #####
 
